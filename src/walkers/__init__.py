@@ -1,0 +1,3 @@
+import randomspace
+
+walkers = [randomspace]
