@@ -36,3 +36,7 @@ This stream could be replayed with this program:
 
 The "+1" in the randrange call is because randrange is an open interval on the
 right and only returns values *less than* the given argument.
+
+## Notes
+
+Of course it's Python 3 compatible! This isn't the stone ages.
