@@ -13,7 +13,7 @@ found in the expected lifetime of this universe.
 
 ## Examples
 
-Spacewalker comes with a commandline utility, `spacewalker', for running
+Spacewalker comes with a commandline utility, `spacewalker`, for running
 walkers. For example:
 
     $ spacewalker -w pyrandom hello
