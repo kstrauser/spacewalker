@@ -7,7 +7,7 @@ import random
 def validate(seedvalue, base, width):
     random.seed(seedvalue)
     while True:
-        yield chr(base + random.randrange(width))
+        yield chr(base + random.randrange(width + 1))
 
 
 def search(worker_number, chunk_size, needle, in_queue, out_queue):
@@ -15,18 +15,19 @@ def search(worker_number, chunk_size, needle, in_queue, out_queue):
     log = logging.getLogger(my_name)
 
     base = min(ord(_) for _ in needle)
-    width = max(ord(_) for _ in needle) - base + 1
+    width = max(ord(_) for _ in needle) - base
+    working_width = width + 1
     if worker_number == 0:
         log.info('base: %d', base)
         log.info('width: %d', width)
-        log.info('estimated chunks: %d', (width - 1) ** len(needle) / chunk_size)
+        log.info('estimated chunks: %d', width ** len(needle) / chunk_size)
 
     nums = [ord(_) - base for _ in needle]
     for chunk_num in iter(in_queue.get, None):
         log.debug('starting chunk %d', chunk_num)
         for seedvalue in range(chunk_num * chunk_size, (chunk_num + 1) * chunk_size):
             random.seed(seedvalue)
-            if all(random.randrange(width) == want for want in nums):
+            if all(random.randrange(working_width) == want for want in nums):
                 goal = {
                     'seedvalue': seedvalue,
                     'base': base,
