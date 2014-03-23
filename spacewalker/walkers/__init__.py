@@ -1,3 +1,5 @@
-import randomspace
+from . import pyrandom
 
-walkers = [randomspace]
+walkers = {  # pylint: disable=C0103
+    'pyrandom': pyrandom,
+}

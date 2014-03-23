@@ -3,7 +3,7 @@
 from multiprocessing import Process, Queue, cpu_count
 
 
-def explore(phrase, function, proc_count=None, chunk_size=100000):
+def explore(needle, function, proc_count=None, chunk_size=100000):
     results = []
     in_queue = Queue()
     out_queue = Queue()
@@ -17,7 +17,7 @@ def explore(phrase, function, proc_count=None, chunk_size=100000):
             return True
 
     procs = [Process(target=function,
-                     args=(worker_number, chunk_size, phrase, out_queue, in_queue))
+                     args=(worker_number, chunk_size, needle, out_queue, in_queue))
              for worker_number in range(proc_count)]
     for proc in procs:
         proc.start()
@@ -25,6 +25,7 @@ def explore(phrase, function, proc_count=None, chunk_size=100000):
     for chunk, _ in enumerate(procs):
         out_queue.put(chunk)
 
+    chunk = proc_count
     while True:
         if handle_result():
             break
